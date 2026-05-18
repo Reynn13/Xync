@@ -1,0 +1,3 @@
+```rs
+
+println("Hello world");
