@@ -154,10 +154,8 @@ impl Semantic {
     ) -> Result<(), Diagnostic> {
         let target_var;
         let relations;
-        let found_at_scope;
 
-        let (scope_id, bounds) = self.get_mut_bounds_recursive(scope_id, unbound_id);
-        found_at_scope = scope_id;
+        let (found_at_scope, bounds) = self.get_mut_bounds_recursive(scope_id, unbound_id);
         if bounds.resolved {
             // TODO LATER: Handle unification checking
             return Ok(());
@@ -182,7 +180,8 @@ impl Semantic {
 
         // ? Then update it's relations
         for bound_id in relations {
-            self.unify_unbound_to(scope_id, bound_id, arena, ty)?;
+            // ? starts at where it found the first bounds
+            self.unify_unbound_to(found_at_scope, bound_id, arena, ty)?;
         }
         Ok(())
     }
