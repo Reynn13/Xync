@@ -34,6 +34,9 @@ impl SemanticScope {
     {
         self.variables.get(name.as_ref())
     }
+    pub fn get_mut_variables(&mut self) -> Vec<&mut Variable> {
+        self.variables.values_mut().collect()
+    }
     pub fn add_variable(&mut self, var: Variable) {
         self.variables.insert(var.ident.lexeme.clone(), var);
     }
