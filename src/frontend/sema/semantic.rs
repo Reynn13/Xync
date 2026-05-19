@@ -29,6 +29,7 @@ impl XynError for SemanticError {
 #[derive(Debug)]
 pub struct Semantic {
     envs: Vec<SemanticScope>,
+    // TODO: Handle unbound resolve
     unbound_counter: usize,
 }
 
@@ -82,6 +83,7 @@ impl Semantic {
                 panic!("No bound found");
             }
 
+            // climbing
             scope_id -= 1;
         }
     }
@@ -90,7 +92,7 @@ impl Semantic {
         let scope = arena.get_scope(scope_id).unwrap();
 
         // debug
-        println!("{}", scope.get_statements().len());
+        // println!("{}", scope.get_statements().len());
         for stmt in scope.get_statements() {
             self.analyze_statement(scope_id, stmt.clone(), arena)?;
         }
@@ -164,17 +166,21 @@ impl Semantic {
         target_var = bounds.target_var.clone();
         relations = bounds.relations.clone();
 
+        // ? Update the main variable it's point to
         if let Some(var) = self.envs[found_at_scope].get_mut_variable(&target_var) {
             var.ty = Some(ty.clone());
+
+            // ? Unbound variable value must also be evaluated to unbound, so we need to re-evaluate it
             if let Some(mut val) = var.value.clone() {
                 self.analyze_expr(&target_var, found_at_scope, &mut val, arena)?;
                 self.envs[found_at_scope]
                     .get_mut_variable(&target_var)
                     .unwrap()
-                    .value = Some(val); 
+                    .value = Some(val);
             }
         }
 
+        // ? Then update it's relations
         for bound_id in relations {
             self.unify_unbound_to(scope_id, bound_id, arena, ty)?;
         }
@@ -199,6 +205,7 @@ impl Semantic {
                 Type::I32 => Ok(Type::I32),
 
                 Type::Unbound(id) => {
+                    // ? Only integers valid in `+x` context, so `x` must be also integer
                     self.unify_unbound_to(scope_id, id, arena, Type::I32)?;
                     Ok(Type::I32)
                 }
@@ -207,6 +214,7 @@ impl Semantic {
                 Type::I32 => Ok(Type::I32),
 
                 Type::Unbound(id) => {
+                    // ? Only integers valid in `-x` context, so `x` must be also integer
                     self.unify_unbound_to(scope_id, id, arena, Type::I32)?;
                     Ok(Type::I32)
                 }
@@ -219,6 +227,7 @@ impl Semantic {
             } => {
                 if let Some(t) = evaluated_ty {
                     match t {
+                        // ? Allowing re-evaluation
                         Type::Unbound(_) => (),
                         t => return Ok(*t),
                     }
@@ -246,14 +255,21 @@ impl Semantic {
             // ?NOTE: An unbound variable meet with another unbound variable, assuming their type is the same
             (Type::Unbound(id1), Type::Unbound(id2)) => {
                 let (_, bounds) = self.get_mut_bounds_recursive(scope_id, id1);
+                // ? id1 -> id2
                 bounds.add_relation(id2);
+
+                // ? this variable new unbound id
                 let new_bound_id = self.unbound_counter;
-                self.unbound_counter += 1;
-                // Overriding here
+                self.unbound_counter += 1; // skip
+
                 let (_, bounds) = self.get_mut_bounds_recursive(scope_id, id2);
+                // ? id2 -> id3
                 bounds.add_relation(id1);
+
+                // ? id2 -> 
                 bounds.add_relation(new_bound_id);
 
+                // ? promote_ty() used in variables context, so we need add another semantic bound that targets it
                 self.envs[scope_id].add_bounds(new_bound_id, SemanticBound::new(varname));
                 Ok(Type::Unbound(new_bound_id))
             }
