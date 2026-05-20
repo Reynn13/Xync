@@ -1,3 +1,10 @@
+/*
+    Head: Interpreter main file
+    Description: The declaration and implementation of Interpreter
+
+    @author LightMayo
+*/
+
 use crate::{OpKind, RuntimeScope, RuntimeValue, RuntimeVariable, SemanticScope, Value};
 
 pub struct Interpreter {

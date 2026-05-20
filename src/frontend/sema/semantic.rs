@@ -1,3 +1,10 @@
+/*
+    Head: Semantic main file
+    Description: The declaration and implementation of Semantic
+
+    @author LightMayo
+*/
+
 use crate::{
     Diagnostic, DiagnosticBuilder, ScopeArena, SemanticBound, SemanticScope, Statement, Type,
     Value, Variable, XynError,
@@ -98,7 +105,7 @@ impl Semantic {
         if let Some(parent) = scope.get_parent() {
             self.envs[scope_id].set_parent(parent);
         }
- 
+
         // debug
         // println!("{}", scope.get_statements().len());
         for stmt in scope.get_statements() {
@@ -274,7 +281,7 @@ impl Semantic {
                 // ? id2 -> id3
                 bounds.add_relation(id1);
 
-                // ? id2 -> 
+                // ? id2 ->
                 bounds.add_relation(new_bound_id);
 
                 // ? promote_ty() used in variables context, so we need add another semantic bound that targets it

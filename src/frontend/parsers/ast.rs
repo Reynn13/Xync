@@ -1,3 +1,10 @@
+/*
+    Head: Parser AST
+    Description: Parser AST's APIs and Items
+
+    @author LightMayo
+*/
+
 use crate::{Token, Type, VariableDescriptor};
 
 #[derive(Debug, PartialEq, Clone)]

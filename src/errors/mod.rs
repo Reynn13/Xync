@@ -1,3 +1,10 @@
+/*
+    Head: Module `errors`
+    Description: Diagnostic implementation and helpers
+
+    @author LightMayo
+*/
+
 mod diagnostic;
 pub use diagnostic::*;
 

@@ -1,3 +1,9 @@
+/*
+    Head: Module `interpreters`
+    Description: Interpreter implementation and helpers
+
+    @author LightMayo
+*/
 
 mod interpreter;
 pub use interpreter::*;

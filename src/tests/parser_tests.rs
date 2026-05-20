@@ -1,3 +1,10 @@
+/*
+    Head: Parser tests module
+    Description: Stress and capability testing for Parser
+
+    @author LightMayo
+*/
+
 #[cfg(test)]
 mod parser_tests {
 

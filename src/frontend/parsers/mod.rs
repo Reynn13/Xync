@@ -1,3 +1,10 @@
+/*
+    Head: Module `parsers`
+    Description: Parser implementation and helpers
+
+    @author LightMayo
+*/
+
 mod parser;
 pub use parser::*;
 

@@ -1,3 +1,10 @@
+/*
+    Head: Lexer Token
+    Description: Lexer Token's APIs and Items
+
+    @author LightMayo
+*/
+
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum TokenTag {
     Identifier,

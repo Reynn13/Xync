@@ -1,3 +1,10 @@
+/*
+    Head: Interpreter Runtime Scope
+    Description: Interpreter Runtime Scope's APIs and Items
+
+    @author LightMayo
+*/
+
 use std::collections::HashMap;
 
 use crate::RuntimeVariable;

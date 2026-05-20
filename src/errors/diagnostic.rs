@@ -1,3 +1,10 @@
+/*
+    Head: Diagnostic main file
+    Description: The declaration and implementation of Diagnostic
+
+    @author LightMayo
+*/
+
 use std::fmt::{Display, Formatter};
 use colored::Colorize;
 

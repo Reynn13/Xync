@@ -1,3 +1,10 @@
+/*
+    Head: Parser main file
+    Description: The declaration and implementation of Parser
+
+    @author LightMayo
+*/
+
 use crate::{
     Diagnostic, DiagnosticBuilder, Mutability, OpKind, Scope, ScopeArena, ScopeId, ScopeType,
     Statement, Token, TokenTag, Tokens, Value, Variable, VariableDescriptor, XynError,
@@ -106,7 +113,7 @@ impl Parser {
         }
     }
 
-    // ? NOTE: Every scope in a file will always be a children to the
+    // ? NOTE: Every scope in a file will always be a children to the file_scope
     fn parse_scope(
         &mut self,
         valid_statements: &Vec<TokenTag>,

@@ -1,4 +1,11 @@
-use std::{collections::HashMap};
+/*
+    Head: Semantic scope
+    Description: Semantic Scope's APIs and Items
+
+    @author LightMayo
+*/
+
+use std::collections::HashMap;
 
 use crate::{ScopeId, Variable};
 
@@ -25,15 +32,14 @@ impl SemanticBound {
 
 #[derive(Debug, Default, PartialEq)]
 pub struct SemanticScope {
-    parent: Option<ScopeId>, 
+    parent: Option<ScopeId>,
     variables: HashMap<String, Variable>,
     bounds: HashMap<usize, SemanticBound>, // (id, (var_name, relations))
-    children: Vec<usize> // id in envs
+    children: Vec<usize>,                  // id in envs
 }
 
 impl SemanticScope {
-    pub fn get_variable(&self, name: impl AsRef<str>) -> Option<&Variable>
-    {
+    pub fn get_variable(&self, name: impl AsRef<str>) -> Option<&Variable> {
         self.variables.get(name.as_ref())
     }
     pub fn get_variables(&self) -> Vec<&Variable> {
@@ -45,8 +51,7 @@ impl SemanticScope {
     pub fn add_variable(&mut self, var: Variable) {
         self.variables.insert(var.ident.lexeme.clone(), var);
     }
-    pub fn get_mut_variable(&mut self, name: impl AsRef<str>) -> Option<&mut Variable>
-    {
+    pub fn get_mut_variable(&mut self, name: impl AsRef<str>) -> Option<&mut Variable> {
         self.variables.get_mut(name.as_ref())
     }
     pub fn get_bounds(&self, id: usize) -> &SemanticBound {

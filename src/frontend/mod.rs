@@ -1,3 +1,10 @@
+/*
+    Head: Module `frontend`
+    Description: Module declarations and uses for it's submodules
+
+    @author LightMayo
+*/
+
 mod lexers;
 pub use lexers::*;
 

@@ -1,3 +1,10 @@
+/*
+    Head: Lexer main file
+    Description: The declaration and implementation of Lexer
+
+    @author LightMayo
+*/
+
 use crate::{Diagnostic, DiagnosticBuilder, Token, TokenTag, Tokens, XynError};
 
 pub struct Lexer<'src> {

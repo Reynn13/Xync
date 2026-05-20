@@ -1,16 +1,23 @@
+/*
+    Head: Parser AST Descriptors
+    Description: Flexible descriptors for AST
+
+    @author LightMayo
+*/
+
 use crate::{Mutability, Type};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct VariableDescriptor {
     mutability: Mutability,
-    evaluated_type: Option<Type>
+    evaluated_type: Option<Type>,
 }
 
 impl VariableDescriptor {
     pub fn default(mutability: Mutability) -> Self {
         Self {
             mutability,
-            evaluated_type: None
+            evaluated_type: None,
         }
     }
     pub fn mutability(&self) -> Mutability {

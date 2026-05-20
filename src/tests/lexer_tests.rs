@@ -1,3 +1,10 @@
+/*
+    Head: Lexer tests module
+    Description: Stress and capability testing for Lexer
+
+    @author LightMayo
+*/
+
 #[cfg(test)]
 pub mod lexer_tests {
     use crate::{DiagnosticBuilder, Lexer, LexerError, Token, TokenTag, Tokens};

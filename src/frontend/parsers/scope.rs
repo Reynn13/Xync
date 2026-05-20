@@ -1,3 +1,9 @@
+/*
+    Head: Parser scope
+    Description: Parser scope's APIs and Items
+
+    @author LightMayo
+*/
 
 use crate::{Statement};
 
