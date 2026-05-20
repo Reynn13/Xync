@@ -1,8 +1,6 @@
 #[cfg(test)]
 pub mod lexer_tests {
-    use crate::{
-        DiagnosticBuilder, Lexer, Token, TokenTag, Tokens, frontend::lexers::lexer::LexerError,
-    };
+    use crate::{DiagnosticBuilder, Lexer, LexerError, Token, TokenTag, Tokens};
 
     #[test]
     fn unknown_chars() {

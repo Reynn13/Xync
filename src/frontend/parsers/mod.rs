@@ -1,8 +1,6 @@
 mod parser;
 pub use parser::*;
 
-mod parser_tests;
-
 mod ast;
 pub use ast::*;
 
