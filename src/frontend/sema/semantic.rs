@@ -44,15 +44,16 @@ impl Semantic {
             unbound_counter: 0,
         }
     }
-    pub fn envs(self) -> Vec<SemanticScope> {
-        self.envs
+
+    pub fn envs(&self) -> &Vec<SemanticScope> {
+        &self.envs
     }
 
     pub fn analyze(&mut self, arena: ScopeArena) -> Result<(), Diagnostic> {
         self.analyze_scope(0, &arena)
     }
 
-    fn get_variable_recursive(
+    pub fn get_variable_recursive(
         &self,
         mut scope_id: usize,
         varname: &String,
@@ -94,6 +95,10 @@ impl Semantic {
     fn analyze_scope(&mut self, scope_id: usize, arena: &ScopeArena) -> Result<(), Diagnostic> {
         let scope = arena.get_scope(scope_id).unwrap();
 
+        if let Some(parent) = scope.get_parent() {
+            self.envs[scope_id].set_parent(parent);
+        }
+ 
         // debug
         // println!("{}", scope.get_statements().len());
         for stmt in scope.get_statements() {
@@ -102,6 +107,7 @@ impl Semantic {
 
         for child_id in scope.get_children_scopes() {
             self.analyze_scope(*child_id, arena)?;
+            self.envs[scope_id].add_child_scope(*child_id);
         }
         Ok(())
     }

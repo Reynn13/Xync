@@ -1,6 +1,6 @@
 use std::{collections::HashMap};
 
-use crate::Variable;
+use crate::{ScopeId, Variable};
 
 #[derive(Debug, Default, PartialEq)]
 pub struct SemanticBound {
@@ -25,14 +25,19 @@ impl SemanticBound {
 
 #[derive(Debug, Default, PartialEq)]
 pub struct SemanticScope {
+    parent: Option<ScopeId>, 
     variables: HashMap<String, Variable>,
     bounds: HashMap<usize, SemanticBound>, // (id, (var_name, relations))
+    children: Vec<usize> // id in envs
 }
 
 impl SemanticScope {
     pub fn get_variable(&self, name: impl AsRef<str>) -> Option<&Variable>
     {
         self.variables.get(name.as_ref())
+    }
+    pub fn get_variables(&self) -> Vec<&Variable> {
+        self.variables.values().collect()
     }
     pub fn get_mut_variables(&mut self) -> Vec<&mut Variable> {
         self.variables.values_mut().collect()
@@ -52,5 +57,16 @@ impl SemanticScope {
     }
     pub fn add_bounds(&mut self, bound_id: usize, bound: SemanticBound) {
         self.bounds.insert(bound_id, bound);
+    }
+
+    pub fn set_parent(&mut self, parent: usize) {
+        self.parent = Some(parent);
+    }
+
+    pub fn add_child_scope(&mut self, child_id: usize) {
+        self.children.push(child_id);
+    }
+    pub fn get_children(&self) -> &Vec<usize> {
+        &self.children
     }
 }
