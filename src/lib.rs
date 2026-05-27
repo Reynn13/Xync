@@ -1,2 +1,2 @@
 
-mod lexers;
+pub mod frontend;
