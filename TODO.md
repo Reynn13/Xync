@@ -12,5 +12,5 @@
         - `;`
     - Minimal values:
         - `Identifiers`
-        - `Numbers` (not floats)
+        - `Integers`
     - One line comment
